@@ -37,8 +37,7 @@ module.exports = smp.wrap({
           {
             loader: 'postcss-loader',
             options: { sourceMap: true }
-          },
-          'sass-loader'
+          }
         ]
       }
     ]
