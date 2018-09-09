@@ -1,22 +1,21 @@
 // webpack v4
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const WebpackMd5Hash = require('webpack-md5-hash')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const DashboardPlugin = require('webpack-dashboard/plugin')
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin")
-const DuplicatePackage = require("duplicate-package-checker-webpack-plugin")
-const smp = new SpeedMeasurePlugin()
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const DuplicatePackage = require("duplicate-package-checker-webpack-plugin");
+const smp = new SpeedMeasurePlugin();
 
 module.exports = smp.wrap({
   entry: [
     './src/js/boot.js'
   ],
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[chunkhash].js'
+    filename: '[name].[contenthash].js',
+    path: path.resolve(__dirname, 'dist')
   },
   module: {
     rules: [
@@ -45,8 +44,8 @@ module.exports = smp.wrap({
   devServer: {
     quiet: true
   },
-  plugins: [
-    new CleanWebpackPlugin('dist', {} ),
+  plugins: [    
+    new CleanWebpackPlugin(['dist', 'build'], {} ),
     new MiniCssExtractPlugin({
       filename: 'style.[contenthash].css',
     }),
@@ -56,9 +55,8 @@ module.exports = smp.wrap({
       template: './src/index.html',
       filename: 'index.html'
     }),
-    new WebpackMd5Hash(),
     new FriendlyErrorsWebpackPlugin(),
     new DashboardPlugin(),
     new DuplicatePackage()
   ]
-})
+});
