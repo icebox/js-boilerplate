@@ -1,6 +1,6 @@
-# Schmidty-Boilerplate
+# schmidty-boilerplate
 
-![npm](https://img.shields.io/npm/v/npm.svg) ![node (scoped with tag)](https://img.shields.io/node/v/@stdlib/stdlib/latest.svg) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+![npm](https://img.shields.io/npm/v/npm.svg) ![node (scoped with tag)](https://img.shields.io/node/v/@stdlib/stdlib/latest.svg)
 
 
 Minimal config for rapid development
