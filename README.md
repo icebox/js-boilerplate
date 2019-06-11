@@ -1,4 +1,4 @@
-# schmidty-boilerplate
+# js-boilerplate
 
 ![npm](https://img.shields.io/npm/v/npm.svg) ![node (scoped with tag)](https://img.shields.io/node/v/@stdlib/stdlib/latest.svg)
 
