@@ -49,6 +49,6 @@
     }
   },
   "dependencies": {
-    "minireset.css": "0.0.3"
+    "minireset.css": "0.0.7"
   }
 }
