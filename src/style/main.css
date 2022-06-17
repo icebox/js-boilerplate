@@ -1,5 +1,13 @@
-@import "~minireset.css/minireset.css";
+@font-face {
+  font-family: 'Open Sans';
+  src:
+    url('../assets/fonts/OpenSans/OpenSans-Regular.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
 body {
   background: #000;
   color: #fff;
+  font-family: 'Open Sans';
 }
