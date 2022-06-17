@@ -1,62 +1,71 @@
-// webpack v4
+// webpack v5
 const path = require('path');
+const DashboardPlugin = require('webpack-dashboard/plugin');
+const DuplicatePackage = require("duplicate-package-checker-webpack-plugin");
+const ESLintPlugin = require('eslint-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const DashboardPlugin = require('webpack-dashboard/plugin');
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
-const DuplicatePackage = require("duplicate-package-checker-webpack-plugin");
-const smp = new SpeedMeasurePlugin();
 
-module.exports = smp.wrap({
-  entry: [
-    './src/js/boot.js'
-  ],
-  output: {
-    filename: '[name].[contenthash].js',
-    path: path.resolve(__dirname, 'dist')
+module.exports = {
+  entry: {
+    index: './src/js/index.js'
   },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: [
-          "babel-loader",
-          "eslint-loader"
-        ]
-      },
-      {
-        test: /\.s?css$/,
-        use: [
-          'style-loader',
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: { sourceMap: true }
-          }
-        ]
-      }
-    ]
-  },
+  devtool: 'inline-source-map',
   devServer: {
-    quiet: true
+    static: './dist',
   },
-  plugins: [    
-    new CleanWebpackPlugin(['dist', 'build'], {} ),
+  mode: 'development',
+  plugins: [
+    new ESLintPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'style.[contenthash].css',
+      filename: "[name].css",
+      chunkFilename: "[id].css",
     }),
     new HtmlWebpackPlugin({
-      inject: false,
+      inject: true,
       hash: true,
       template: './src/index.html',
+      title: 'boilerplate 0.1',
       filename: 'index.html'
     }),
     new FriendlyErrorsWebpackPlugin(),
     new DashboardPlugin(),
-    new DuplicatePackage()
-  ]
-});
+    new DuplicatePackage({
+      verbose: true
+    })
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: [
+          "babel-loader"
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
+    ]
+  },
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  }
+};
