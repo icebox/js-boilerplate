@@ -1,39 +1,36 @@
 // webpack v5
 const path = require('path');
 const DashboardPlugin = require('webpack-dashboard/plugin');
-const DuplicatePackage = require("duplicate-package-checker-webpack-plugin");
+const DuplicatePackage = require('duplicate-package-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: {
-    index: './src/js/index.js'
-  },
+  mode: 'development',
+  entry: path.resolve(__dirname, './src/index.js'),
   devtool: 'inline-source-map',
   devServer: {
     static: './dist',
   },
-  mode: 'development',
+
   plugins: [
     new ESLintPlugin(),
     new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css",
+      filename: '[name].css',
+      chunkFilename: '[id].css',
     }),
     new HtmlWebpackPlugin({
       inject: true,
       hash: true,
-      template: './src/index.html',
-      title: 'boilerplate 0.1',
-      filename: 'index.html'
+      template: './public/index.html',
     }),
     new FriendlyErrorsWebpackPlugin(),
     new DashboardPlugin(),
     new DuplicatePackage({
-      verbose: true
-    })
+      verbose: true,
+    }),
   ],
   module: {
     rules: [
@@ -41,12 +38,15 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-proposal-class-properties']
-          }
-        }
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-react',
+            ],
+            plugins: ['@babel/plugin-proposal-class-properties'],
+          },
+        },
       },
       {
         test: /\.css$/,
@@ -60,7 +60,10 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
       },
-    ]
+    ],
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx'],
   },
   output: {
     filename: '[name].bundle.js',
@@ -71,5 +74,5 @@ module.exports = {
     splitChunks: {
       chunks: 'all',
     },
-  }
+  },
 };
