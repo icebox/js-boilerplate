@@ -1,14 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
+import Image from '../assets/imgs/main.svg';
 
 function App() {
   return (
     <div>
-      <h1>
-        Hola Moto
-      </h1>
+      <h1>JS Boilerplate</h1>
       <div>
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={Image} alt="logo" />
       </div>
     </div>
   );
